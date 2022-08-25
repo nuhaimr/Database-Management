@@ -1,0 +1,308 @@
+mysql> USE dswork;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SOURCE pracTest3Tables_1.sql;
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+Query OK, 0 rows affected (0.15 sec)
+
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected, 1 warning (0.08 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SOURCE pracTest3Values_1.sql
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_dswork |
++------------------+
+| Activity         |
+| Artist           |
+| CommWork         |
+| Courses          |
+| Dept             |
+| Emp              |
+| Enrolments       |
+| Faculty          |
+| Festival         |
+| Student          |
+| TestEnrolments   |
+| TestStudents     |
+| TestUnitsTable   |
+| UnitsTable       |
++------------------+
+14 rows in set (0.00 sec)
+
+mysql> SHOW TABLE Students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Students' at line 1
+mysql> SELECT s.lastName, s.firstName, a.activityNo, a.activityName
+    -> FROM Student s INNER JOIN Activity a
+    -> ON a.leader = s.stuNo;
++----------+-----------+------------+----------------------+
+| lastName | firstName | activityNo | activityName         |
++----------+-----------+------------+----------------------+
+| Pulaski  | Eva       | CO3100     | Science for kids     |
+| Kwan     | Sally     | CO3101     | Daffodil day 2020    |
+| Nicholls | Heather   | CO3102     | Sci Fic with Schools |
+| Adamson  | Bruce     | CO3103     | Games Night -Sem1    |
+| Awang    | Aati      | CO3104     | Daffodil day 2021    |
+| Chauhan  | Diya      | CO3105     | Tax Clinic           |
+| Silva    | Adrian    | CO3106     | Eating Healthy       |
++----------+-----------+------------+----------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT f.facultyCode, f.facultyName, a.activityNo, a.activityName
+    -> FROM Faculty f INNER JOIN Activity a
+    -> ON f.facultyCode = a.facultyCode;
++-------------+------------------------------------+------------+----------------------+
+| facultyCode | facultyName                        | activityNo | activityName         |
++-------------+------------------------------------+------------+----------------------+
+| A01         | Faculty of Science and Engineering | CO3100     | Science for kids     |
+| A01         | Faculty of Science and Engineering | CO3102     | Sci Fic with Schools |
+| A01         | Faculty of Science and Engineering | CO3103     | Games Night -Sem1    |
+| A02         | Faculty of Humanities              | CO3101     | Daffodil day 2020    |
+| A02         | Faculty of Humanities              | CO3104     | Daffodil day 2021    |
+| A03         | Faculty of Health Sceiences        | CO3106     | Eating Healthy       |
+| A05         | Faculty of Law                     | CO3105     | Tax Clinic           |
++-------------+------------------------------------+------------+----------------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT s.studentNo, s.firstName, s.lastName, s.commRate
+    -> FROM Student s INNER JOIN Student 
+    -> ON s.commRate >= (SELECT commRate 
+    -> FROM Student
+    -> WHERE firstName = 'Heather Nicholls');
+ERROR 1054 (42S22): Unknown column 's.studentNo' in 'field list'
+mysql> SELECT s.stuNo, s.firstName, s.lastName, s.commRate FROM Student s INNER JOIN Student  ON s.commRate >= (SELECT commRate  FROM Student WHERE firstName = 'Heather Nicholls');
+Empty set (0.00 sec)
+
+mysql> SELECT SUM(estCost), AVG(estCost), COUNT(activityNo)
+    -> FROM Activity
+    -> ORDER BY SUM(estCost) DESC;
++--------------+--------------+-------------------+
+| SUM(estCost) | AVG(estCost) | COUNT(activityNo) |
++--------------+--------------+-------------------+
+|     25800.00 |  3685.714286 |                 7 |
++--------------+--------------+-------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT s.stuNo, s.firstName, s.lastName, c.hours
+    -> ;
+ERROR 1109 (42S02): Unknown table 's' in field list
+mysql> SELECT s.stuNo, a.leader
+    -> FROM Student s NATURAL JOIN Activity a
+    -> WHERE s.stuNo = a.leader AND AVG(estCost) < (SELECT AVG(estCost)
+    -> FROM Activity);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a WHERE s.stuNo = a.leader AND AVG(estCost) < (SELECT AVG(estCost) FROM Activity)
+    -> GROUP BY stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a WHERE s.stuNo = a.leader AND AVG(estCost) < (SELECT AVG(estCost) FROM Activity) GROUP BY s.stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, s.firstName, s.lastName, c.hours
+    -> FROM Student s LEFT OUTER JOIN CommWork c;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> SELECT s.stuNo, s.firstName, s.lastName, c.hours FROM Students s LEFT OUTER JOIN CommWork c;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT s.stuNo, s.firstName, s.lastName, c.hours FROM Students s LEFT OUTER JOIN CommWork c
+    -> ON s.stuNo = c.stuNo;
+ERROR 1146 (42S02): Table 'dswork.Students' doesn't exist
+mysql> SELECT s.stuNo, s.firstName, s.lastName, c.hours FROM Student s LEFT OUTER JOIN CommWork c ON s.stuNo = c.stuNo;
++--------+-----------+-----------+-------+
+| stuNo  | firstName | lastName  | hours |
++--------+-----------+-----------+-------+
+| 000010 | Christine | Haas      |  NULL |
+| 000011 | John      | Geyer     |  NULL |
+| 000012 | Eva       | Pulaski   |     3 |
+| 000012 | Eva       | Pulaski   |     2 |
+| 000012 | Eva       | Pulaski   |     1 |
+| 000013 | Vincenzo  | Lucchesi  |  NULL |
+| 000014 | Heather   | Nicholls  |     1 |
+| 000015 | Bruce     | Adamson   |     1 |
+| 000015 | Bruce     | Adamson   |     1 |
+| 000015 | Bruce     | Adamson   |     1 |
+| 000016 | Aati      | Awang     |     2 |
+| 000017 | Ruchira   | Patel     |  NULL |
+| 000018 | Adrian    | Silva     |     3 |
+| 000019 | Diya      | Chauhan   |     1 |
+| 000020 | Apurva    | Banerjee  |  NULL |
+| 000021 | Sally     | Kwan      |     3 |
+| 000022 | Masatoshi | Yoshimura |  NULL |
+| 000023 | David     | Brown     |     3 |
+| 000024 | Salvatore | Marino    |  NULL |
+| 000025 | Ethel     | Schneider |     1 |
+| 000026 | Daniel    | Smith     |     2 |
+| 000027 | John      | Parker    |     1 |
+| 000028 | Wing      | Lee       |     2 |
+| 000029 | Irving    | Stern     |  NULL |
++--------+-----------+-----------+-------+
+24 rows in set (0.00 sec)
+
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a WHERE s.stuNo = a.leader AND AVG(estCost) < (SELECT AVG(estCost) FROM Activity) GROUP BY
+    -> s.stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a WHERE s.stuNo = a.leader AND AVG(estCost) < ALL(SELECT AVG(estCost) FROM Activity) GROUP BY s.stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a WHERE s.stuNo = a.leader AND AVG(estCost) < ALL(SELECT AVG(estCost) FROM Activity) GROUP BY s.stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader
+    ->  FROM Student s NATURAL JOIN Activity a 
+    ->  WHERE s.stuNo = a.leader AND AVG(estCost) < (SELECT AVG(estCost) FROM Activity) 
+    ->  FROM Student s NATURAL JOIN Activity a
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Student s NATURAL JOIN Activity a' at line 4
+mysql> SELECT s.stuNo, a.leader FROM Student s NATURAL JOIN Activity a ON s.stuNo = a.leader AND AVG(estCost) < ALL(SELECT AVG(estCost) FROM Activity) GROUP BY s.stuNo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON s.stuNo = a.leader AND AVG(estCost) < ALL(SELECT AVG(estCost) FROM Activity) ' at line 1
+mysql> SELECT s.stuNo, a.leader FROM Student s INNER JOIN Activity a ON s.stuNo = a.leader AND AVG(estCost) < ALL(SELECT AVG(estCost) FROM Activity) GROUP BY s.stuNo;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT s.stuNo, a.leader
+    ->  FROM Student s NATURAL JOIN Activity a 
+    ->  WHERE s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity) 
+    -> GROUP BY s.stuNo;
++--------+--------+
+| stuNo  | leader |
++--------+--------+
+| 000021 | 000021 |
+| 000015 | 000015 |
+| 000016 | 000016 |
+| 000019 | 000019 |
++--------+--------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT s.stuNo, a.leader
+    ->  FROM Student s NATURAL JOIN Activity a 
+    ->  WHERE s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity) 
+    -> GROUP BY s.stuNo;
++--------+--------+
+| stuNo  | leader |
++--------+--------+
+| 000021 | 000021 |
+| 000015 | 000015 |
+| 000016 | 000016 |
+| 000019 | 000019 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT s.stuNo, a.leader  FROM Student s NATURAL JOIN Activity a   WHERE  estCost < (SELECT AVG(estCost) FROM Activity)  GROUP BY s.stuNo;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'dswork.a.leader' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT s.stuNo, a.leader
+    ->  FROM Student s NATURAL JOIN Activity a 
+    ->  WHERE s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity) 
+    -> GROUP BY s.stuNo;
++--------+--------+
+| stuNo  | leader |
++--------+--------+
+| 000021 | 000021 |
+| 000015 | 000015 |
+| 000016 | 000016 |
+| 000019 | 000019 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT s.stuNo, FROM Student s NATURAL JOIN Activity a   WHERE s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity)  GROUP BY s.stuNo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Student s NATURAL JOIN Activity a   WHERE s.stuNo = a.leader AND estCost < ' at line 1

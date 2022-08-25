@@ -1,0 +1,47 @@
+--1 tee Prac03_20696366_Working.out
+
+--2
+SOURCE TABLES
+
+--1
+> SELECT s.lastName, s.firstName, a.activityNo, a.activityName
+  FROM Student s INNER JOIN Activity a
+  ON a.leader = s.stuNo;
+    
+ --2
+ > SELECT f.facultyCode, f.facultyName, a.activityNo, a.activityName
+   FROM Faculty f INNER JOIN Activity a
+   ON f.facultyCode = a.facultyCode;
+    
+--3
+SELECT s.stuNo, s.firstName, s.lastName, s.commRate
+ FROM Student s INNER
+JOIN Student  ON s.commRate >= (SELECT commRate  FROM Student WHERE firstName =
+'Heather Nicholls');
+
+
+--4
+ SELECT SUM(estCost) AS 'Total Cost', AVG(estCost), COUNT(activityNo)
+    FROM Activity
+    ORDER BY Total Cost DESC;
+
+--5
+SELECT s.stuNo, s.firstName, s.lastName, c.hours
+ FROM Student s LEFT OUTER JOIN CommWork c 
+ ON s.stuNo = c.stuNo;
+
+
+
+--6a
+SELECT s.stuNo, a.leader
+ FROM Student s NATURAL JOIN Activity a 
+ WHERE s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity) 
+ GROUP BY s.stuNo;
+
+--6b
+SELECT s.stuNo, s.firstName, s.lastname
+FROM Student s INNER JOIN Activity a
+ON s.stuNo = a.leader AND estCost < (SELECT AVG(estCost) FROM Activity)
+GROUP BY s.stuNo;
+
+
